@@ -1,14 +1,15 @@
-// @flow
+// @flow strict-local
 
 import util from 'util';
 
 import Git from './Git';
 import Changeset from './Changeset';
+import PathFilters from './PathFilters';
 
 export default class Sync {
   getFirstSourceID = (): string => {
-    // TODO: just a temporary SHA to start somewhere (related to src/packages/relay)
-    return '71d3b4ce16f77de7e2d51847f29813803660d744';
+    // TODO: just a temporary SHA to start somewhere (first commit in this monorepo)
+    return 'd30a77bd2fe0fdfe5739d68fc9592036e94364dd';
   };
 
   getSourceChangesets = (): Set<Changeset> => {
@@ -17,7 +18,7 @@ export default class Sync {
     const repo = new Git();
     const sourceChangesets = new Set<Changeset>();
 
-    sourceChangesets.add(repo.getChangesetFromID(initialRevision));
+    sourceChangesets.add(repo.getChangesetFromID(initialRevision)); // TODO: is this correct - the first commit is irrelevant (?)
     repo
       .findDescendantsPath(initialRevision, [
         'src/packages/relay', // TODO: make it configurable
@@ -32,17 +33,26 @@ export default class Sync {
   getFilteredChangesets = (): Set<Changeset> => {
     const filteredChangesets = new Set<Changeset>();
     this.getSourceChangesets().forEach(changeset => {
-      // TODO: apply filters (paths) and tracking data (kiwicom-source-id) on top of it (see: addTrackingData)
-      filteredChangesets.add(this.addTrackingData(changeset));
+      const changesetWithTrackingID = this.addTrackingData(changeset);
+      filteredChangesets.add(
+        PathFilters.moveDirectories(
+          PathFilters.stripExceptDirectories(changesetWithTrackingID, [
+            'src/packages/relay', // TODO: make it configurable
+          ]),
+          new Map([
+            ['src/packages/relay/', ''], // TODO: make it configurable
+          ]),
+        ),
+      );
     });
     return filteredChangesets;
   };
 
-  addTrackingData = (changeset: Changeset) => {
+  addTrackingData = (changeset: Changeset): Changeset => {
     const revision = changeset.getID();
-    const newMessage =
-      changeset.getMessage() + '\n\nkiwicom-source-id: ' + revision;
-    return changeset.withMessage(newMessage.trim());
+    const newDescription =
+      changeset.getDescription() + '\n\nkiwicom-source-id: ' + revision;
+    return changeset.withDescription(newDescription.trim());
   };
 
   run = () => {
