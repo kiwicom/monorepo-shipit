@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TODO 1`] = `
+"From mocked_id Mon Sep 17 00:00:00 2001
+From: mocked_author
+Date: mocked_timestamp
+Subject: [PATCH] mocked_subject
+
+mocked_description
+
+diff --git a/mocked_path1 b/mocked_path1
+mocked_body1
+diff --git a/mocked_path2 b/mocked_path2
+mocked_body2
+
+--
+2.21.0
+"
+`;
