@@ -17,7 +17,6 @@ import OSSPackages from '../../../open-source';
 // - src/packages/global-id -> src/packages/graphql-global-id
 // - src/_graphql-resolve-wrapper -> src/packages/graphql-resolve-wrapper
 // - src/packages/npm-publisher -> src/packages/monorepo-npm-publisher
-// - vault2env (prolly not fixable, I forgot to import this package with history from the previous repository - no biggie)
 
 // TODO: we could (should) eventually keep the temp directory, cache it and just update it
 const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'kiwicom-shipit-'));
@@ -52,9 +51,16 @@ for (const [, config] of OSSPackages.entries()) {
     },
   );
 
+  const legacyRoot = config.legacyRoot;
   new Sync({
     clonedir,
-    roots: [config.privatePath],
+    roots:
+      legacyRoot !== undefined
+        ? [
+            config.privatePath,
+            legacyRoot, // TODO: remove when synced
+          ]
+        : [config.privatePath],
     directoryMapping: new Map([[config.privatePath + '/', '']]),
   }).run(() => {
     console.warn('Filtering done, pushing...');
