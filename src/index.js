@@ -12,11 +12,6 @@ import Sync from './Sync';
 import OSSPackages from '../../../open-source';
 
 // TODO: fail on errors (see: https://gitlab.skypicker.com/incubator/universe/-/jobs/4646614)
-// TODO: fix fucked-up packages (where we lost Git history because of multiple roots):
-// - src/packages/bc-checker -> src/packages/graphql-bc-checker
-// - src/packages/global-id -> src/packages/graphql-global-id
-// - src/_graphql-resolve-wrapper -> src/packages/graphql-resolve-wrapper
-// - src/packages/npm-publisher -> src/packages/monorepo-npm-publisher
 
 // TODO: we could (should) eventually keep the temp directory, cache it and just update it
 const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'kiwicom-shipit-'));
@@ -51,16 +46,9 @@ for (const [, config] of OSSPackages.entries()) {
     },
   );
 
-  const legacyRoot = config.legacyRoot;
   new Sync({
     clonedir,
-    roots:
-      legacyRoot !== undefined
-        ? [
-            config.privatePath,
-            legacyRoot, // TODO: remove when synced
-          ]
-        : [config.privatePath],
+    roots: [config.privatePath],
     directoryMapping: new Map([[config.privatePath + '/', '']]),
   }).run(() => {
     console.warn('Filtering done, pushing...');
