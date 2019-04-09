@@ -2,11 +2,13 @@
 
 import Changeset from './Changeset';
 
-function matchesAnyPattern(
-  path: string,
-  stripPatterns: $ReadOnlyArray<RegExp>,
-) {
-  return stripPatterns.some(stripPattern => stripPattern.test(path));
+function matchesAnyPattern(path: string, stripPatterns: Set<RegExp>) {
+  for (const stripPattern of stripPatterns) {
+    if (stripPattern.test(path)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export default class PathFilters {
@@ -15,9 +17,9 @@ export default class PathFilters {
    */
   static stripPaths(
     changeset: Changeset,
-    stripPatterns: $ReadOnlyArray<RegExp>,
+    stripPatterns: Set<RegExp>,
   ): Changeset {
-    if (stripPatterns.length === 0) {
+    if (stripPatterns.size === 0) {
       return changeset;
     }
     const diffs = new Set();
@@ -87,11 +89,12 @@ export default class PathFilters {
    */
   static stripExceptDirectories(
     changeset: Changeset,
-    rawRoots: $ReadOnlyArray<string>,
-  ) {
-    const roots = rawRoots.map(rawRoot => {
-      return rawRoot.endsWith('/') ? rawRoot : rawRoot + '/';
-    });
+    rawRoots: Set<string>,
+  ): Changeset {
+    const roots = new Set();
+    rawRoots.forEach(rawRoot =>
+      roots.add(rawRoot.endsWith('/') ? rawRoot : rawRoot + '/'),
+    );
     const diffs = new Set();
     for (const diff of changeset.getDiffs()) {
       const path = diff.path;
