@@ -3,7 +3,7 @@
 import Git from '../Git';
 import Changeset from '../Changeset';
 
-it('TODO', () => {
+it('renders patch as expected', () => {
   const repo = new Git('mocked_repo_path');
   const changeset = new Changeset()
     .withID('mocked_id')

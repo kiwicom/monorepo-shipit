@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TODO 1`] = `
+exports[`renders patch as expected 1`] = `
 "From mocked_id Mon Sep 17 00:00:00 2001
 From: mocked_author
 Date: mocked_timestamp

@@ -29,7 +29,7 @@ export default class PhaseRunner {
     for (const sourceRoot of c.sourceRoots) {
       directoryMapping.set(
         sourceRoot.endsWith(path.sep) ? sourceRoot : sourceRoot + path.sep,
-        '',
+        '', // TODO: add proper destination roots when we have better config for our mappings
       );
     }
 
@@ -40,6 +40,7 @@ export default class PhaseRunner {
         // TODO: pass down appropriate filters from here instead of `directoryMapping` (it's project specific)
         c.destinationPath,
         c.sourceRoots,
+        new Set(['']), // TODO: add proper destination roots when we have better config for our mappings
         directoryMapping,
       ),
       // TODO: verify phase
