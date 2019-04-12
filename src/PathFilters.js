@@ -1,5 +1,6 @@
 // @flow strict-local
 
+import path from 'path';
 import { invariant } from '@kiwicom/js';
 
 import Changeset from './Changeset';
@@ -114,7 +115,7 @@ export default class PathFilters {
   ): Changeset {
     const roots = new Set();
     rawRoots.forEach(rawRoot =>
-      roots.add(rawRoot.endsWith('/') ? rawRoot : rawRoot + '/'),
+      roots.add(rawRoot.endsWith(path.sep) ? rawRoot : rawRoot + path.sep),
     );
     const diffs = new Set();
     for (const diff of changeset.getDiffs()) {

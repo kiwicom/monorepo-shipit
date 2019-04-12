@@ -1,15 +1,14 @@
 // @flow strict-local
 
-import path from 'path';
-
 import createClonePhase from './phases/createClonePhase';
 import createSyncPhase from './phases/createSyncPhase';
 import createPushPhase from './phases/createPushPhase';
 
 type PhaseRunnerConfig = $ReadOnly<{|
   // what is the URL of source repo (usually SSH URL like git@github.com:kiwicom/fetch.git)
-  sourceURL: string,
-  sourceRoots: Set<string>,
+  sourceURL: string, //  TODO: it's not really a source (?)
+
+  directoryMapping: Map<string, string>,
 
   // where is the destination Git repo located on filesystem (usually cloned GitHub repo)
   destinationPath: string,
@@ -23,28 +22,17 @@ export default class PhaseRunner {
   }
 
   run() {
-    const c = this.config;
-
-    const directoryMapping = new Map();
-    for (const sourceRoot of c.sourceRoots) {
-      directoryMapping.set(
-        sourceRoot.endsWith(path.sep) ? sourceRoot : sourceRoot + path.sep,
-        '', // TODO: add proper destination roots when we have better config for our mappings
-      );
-    }
+    const cfg = this.config;
 
     new Set<() => void>([
       // TODO: clean phase
-      createClonePhase(c.sourceURL, c.destinationPath),
+      createClonePhase(cfg.sourceURL, cfg.destinationPath),
       createSyncPhase(
-        // TODO: pass down appropriate filters from here instead of `directoryMapping` (it's project specific)
-        c.destinationPath,
-        c.sourceRoots,
-        new Set(['']), // TODO: add proper destination roots when we have better config for our mappings
-        directoryMapping,
+        cfg.destinationPath,
+        cfg.directoryMapping, // TODO: pass down appropriate filters from here instead of `directoryMapping` (should be project specific)
       ),
       // TODO: verify phase
-      createPushPhase(c.destinationPath),
+      createPushPhase(cfg.destinationPath),
     ]).forEach(phase => phase());
   }
 }

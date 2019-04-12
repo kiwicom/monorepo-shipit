@@ -52,8 +52,18 @@ describe('moveDirectories', () => {
       new Map([['foo/', ''], ['bar/', 'project_bar/']]),
       ['foo/bar/part of project foo', 'bar/part of project bar'],
       [
-        'bar/part of project foo', // this shouldn't turn into 'project_bar/part ...'
+        'bar/part of project foo', // this shouldn't turn into 'project_bar/part of project foo'
         'project_bar/part of project bar',
+      ],
+    ],
+    [
+      'missing trailing slashes',
+      new Map([['foo', 'bar'], ['xyz/', 'aaa']]),
+      ['foo/file', 'foo_baz/file', 'xyz/file'],
+      [
+        'bar/file',
+        'bar_baz/file',
+        'aaafile', // this can be a gotcha for someone
       ],
     ],
   ])('%s', (testName, mapping, inputPaths, expected) => {
