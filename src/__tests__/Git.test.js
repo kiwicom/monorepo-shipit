@@ -1,10 +1,10 @@
 // @flow
 
-import Git from '../Git';
+import RepoGIT from '../RepoGIT';
 import Changeset from '../Changeset';
 
 it('renders patch as expected', () => {
-  const repo = new Git('mocked_repo_path');
+  const repo = new RepoGIT('mocked_repo_path');
   const changeset = new Changeset()
     .withID('mocked_id')
     .withTimestamp('mocked_timestamp')

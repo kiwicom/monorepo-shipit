@@ -3,16 +3,7 @@
 import createClonePhase from './phases/createClonePhase';
 import createSyncPhase from './phases/createSyncPhase';
 import createPushPhase from './phases/createPushPhase';
-
-type PhaseRunnerConfig = $ReadOnly<{|
-  // what is the URL of source repo (usually SSH URL like git@github.com:kiwicom/fetch.git)
-  sourceURL: string, //  TODO: it's not really a source (?)
-
-  directoryMapping: Map<string, string>,
-
-  // where is the destination Git repo located on filesystem (usually cloned GitHub repo)
-  destinationPath: string,
-|}>;
+import PhaseRunnerConfig from './PhaseRunnerConfig';
 
 export default class PhaseRunner {
   config: PhaseRunnerConfig;
@@ -26,13 +17,10 @@ export default class PhaseRunner {
 
     new Set<() => void>([
       // TODO: clean phase
-      createClonePhase(cfg.sourceURL, cfg.destinationPath),
-      createSyncPhase(
-        cfg.destinationPath,
-        cfg.directoryMapping, // TODO: pass down appropriate filters from here instead of `directoryMapping` (should be project specific)
-      ),
+      createClonePhase(cfg.exportedRepoURL, cfg.exportedRepoPath),
+      createSyncPhase(cfg),
       // TODO: verify phase
-      createPushPhase(cfg.destinationPath),
+      createPushPhase(cfg.exportedRepoPath),
     ]).forEach(phase => phase());
   }
 }
