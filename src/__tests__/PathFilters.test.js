@@ -12,7 +12,7 @@ describe('stripPaths', () => {
       ['foo', 'herp/derp', 'herp/derp-derp', 'derp'],
     ],
     ['Remove directory', [/^herp\//], ['foo', 'bar', 'derp']],
-    ['Remove file', [/(^|\/)derp(\/|$)/], ['foo', 'bar', 'herp/derp-derp']],
+    ['Remove file', [/(?:^|\/)derp(?:\/|$)/], ['foo', 'bar', 'herp/derp-derp']],
     [
       'Multiple patterns',
       [/^foo$/, /^bar$/],
