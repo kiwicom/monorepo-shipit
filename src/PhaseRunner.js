@@ -5,6 +5,10 @@ import createSyncPhase from './phases/createSyncPhase';
 import createPushPhase from './phases/createPushPhase';
 import PhaseRunnerConfig from './PhaseRunnerConfig';
 
+/**
+ * Phase runner collects all passes and gets their CLI arguments. It takes care
+ * of the phases execution.
+ */
 export default class PhaseRunner {
   config: PhaseRunnerConfig;
 
