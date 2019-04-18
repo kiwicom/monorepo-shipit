@@ -3,6 +3,11 @@
 import RepoGIT from '../RepoGIT';
 import Changeset from '../Changeset';
 
+jest.mock('fs', () => ({
+  // workarounding fake Git repo paths
+  existsSync: () => true,
+}));
+
 it('renders patch as expected', () => {
   const repo = new RepoGIT('mocked_repo_path');
   const changeset = new Changeset()
