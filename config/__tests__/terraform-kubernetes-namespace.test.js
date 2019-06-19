@@ -7,10 +7,7 @@ import testExportedPaths from './testExportedPaths';
 testExportedPaths(
   path.join(__dirname, '..', 'terraform-kubernetes-namespace.js'),
   [
-    [
-      'src/platform/terraform-kubernetes-namespace/outputs.tf',
-      'outputs.tf',
-    ],
+    ['src/platform/terraform-kubernetes-namespace/outputs.tf', 'outputs.tf'],
     ['src/platform/terraform-kubernetes-namespace/main.tf', 'main.tf'],
     [
       'src/platform/terraform-kubernetes-namespace/variables.tf',
