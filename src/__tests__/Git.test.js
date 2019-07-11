@@ -28,9 +28,7 @@ jest.mock('@kiwicom/monorepo-utils', () => {
                   'e83c5163316f89bfbde7d9ab23ca2e25604af290'; // we should be interested only in this one
             break;
           default:
-            throw new Error(
-              `There is no available dataset for command: ${command}`,
-            );
+            throw new Error(`There is no available dataset for command: ${command}`);
         }
       }
 
@@ -77,15 +75,11 @@ describe('findFirstAvailableCommit', () => {
 
   it('returns first available revision when single root available', () => {
     const repo = new RepoGIT('mocked_repo_path_1');
-    expect(repo.findFirstAvailableCommit()).toBe(
-      'd30a77bd2fe0fdfe5739d68fc9592036e94364dd',
-    );
+    expect(repo.findFirstAvailableCommit()).toBe('d30a77bd2fe0fdfe5739d68fc9592036e94364dd');
   });
 
   it('returns first available revision when multiple roots available', () => {
     const repo = new RepoGIT('mocked_repo_path_2');
-    expect(repo.findFirstAvailableCommit()).toBe(
-      'e83c5163316f89bfbde7d9ab23ca2e25604af290',
-    );
+    expect(repo.findFirstAvailableCommit()).toBe('e83c5163316f89bfbde7d9ab23ca2e25604af290');
   });
 });
