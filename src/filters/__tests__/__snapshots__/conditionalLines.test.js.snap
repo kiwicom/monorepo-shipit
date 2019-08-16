@@ -6,14 +6,14 @@ Object {
 --- a/foo
 +++ b/foo
 @@ -1,7 +1,7 @@
- // @x-oss-disable: foo
+ foo // @x-oss-disable
  normal_1
- // @x-oss-disable: bar
-// @x-oss-disable: +baz
+ bar // @x-oss-disable
++baz // @x-oss-disable
 
-   // @x-oss-disable: herp
+   herp // @x-oss-disable
    normal_2
-// @x-oss-disable: -  derp
+-  derp // @x-oss-disable
 ",
   "output": "index 1fa2ce4..499116a 100644
 --- a/foo
@@ -68,11 +68,11 @@ Object {
 --- a/foo
 +++ b/foo
 @@ -1,5 +1,5 @@
- foo // @x-oss-enable
- // @x-oss-disable: bar
-// @x-oss-disable: +baz
+ // @x-oss-enable: foo
+ bar // @x-oss-disable
++baz // @x-oss-disable
 
-   // @x-oss-disable: herp
+   herp // @x-oss-disable
 -  // @x-oss-enable: derp
 ",
   "output": "index 1fa2ce4..499116a 100644
@@ -95,12 +95,12 @@ Object {
 --- a/foo
 +++ b/foo
 @@ -1,5 +1,5 @@
- // @x-oss-disable: foo // first-comment
- // @x-oss-disable: bar // first-comment
-// @x-oss-disable: +baz // first-comment
+ foo // first-comment // @x-oss-disable
+ bar // first-comment // @x-oss-disable
++baz // first-comment // @x-oss-disable
 
-   // @x-oss-disable: herp // first-comment
-// @x-oss-disable: -  derp // first-comment
+   herp // first-comment // @x-oss-disable
+-  derp // first-comment // @x-oss-disable
 ",
   "output": "index 1fa2ce4..499116a 100644
 --- a/foo
