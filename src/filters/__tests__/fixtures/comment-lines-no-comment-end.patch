@@ -3,14 +3,14 @@ index 1fa2ce4..499116a 100644
 --- a/foo
 +++ b/foo
 @@ -1,7 +1,7 @@
- // @x-oss-disable: foo
+ foo // @x-oss-disable
  normal_1
- // @x-oss-disable: bar
-// @x-oss-disable: +baz
+ bar // @x-oss-disable
++baz // @x-oss-disable
 
-   // @x-oss-disable: herp
+   herp // @x-oss-disable
    normal_2
-// @x-oss-disable: -  derp
+-  derp // @x-oss-disable
 --
 2.9.3
 
