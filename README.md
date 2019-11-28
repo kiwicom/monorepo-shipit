@@ -84,7 +84,7 @@ new Map([
 ]);
 ```
 
-This maps all the files from our [fetch](https://github.com/kiwicom/fetch) package to the GitHub root so OSS users have access to everything from this package. More advanced example when you need to publish some GitHub specific files:
+This maps all the files from our [fetch](https://github.com/adeira/universe/tree/master/src/fetch) package to the GitHub root so OSS users have access to everything from this package. More advanced example when you need to publish some GitHub specific files:
 
 ```js
 new Map([
