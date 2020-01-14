@@ -1,3 +1,9 @@
+## This package is deprecated
+
+`@kiwicom/monorepo-shipit` is no longer maintained
+
+---
+
 Monorepo Shipit takes care of exporting and importing our source-codes from our private GitLab monorepo into any other Git repository. It can export even from our monorepo to another monorepo. We use it open-source some of our packages to our [GitHub](https://github.com/kiwicom). This way we can develop just like we are used to in one monorepo but we can contribute back to the community by making some of our codes open.
 
 # Shipit part
